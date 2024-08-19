@@ -1,0 +1,27 @@
+@PACKAGE_INIT@
+
+include("@CMAKE_INSTALL_PREFIX@/lib/cmake/openrm/OpenRMTarget.cmake")
+
+set(
+    OpenRM_INCLUDE_DIRS
+        "@CMAKE_INSTALL_PREFIX@/include"
+        "@CMAKE_INSTALL_PREFIX@/include/openrm"
+)
+
+set(
+    OpenRM_LIBS
+        openrm::openrm_attack
+        openrm::openrm_kalman
+        openrm::openrm_pointer
+        openrm::openrm_solver
+        openrm::openrm_video
+
+        openrm::openrm_delay
+        openrm::openrm_print
+        openrm::openrm_serial
+        openrm::openrm_tf
+        openrm::openrm_timer
+
+        openrm::openrm_uniterm
+)
+

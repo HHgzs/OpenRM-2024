@@ -1,0 +1,15 @@
+add_library(
+    openrm_solver
+        SHARED
+)
+target_sources(
+    openrm_solver
+        PRIVATE
+        ${CMAKE_SOURCE_DIR}/src/solver/solvepnp.cpp
+)
+target_include_directories(
+    openrm_solver
+        PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include/openrm>
+)

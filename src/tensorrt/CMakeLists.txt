@@ -1,0 +1,27 @@
+add_library(
+    openrm_tensorrt
+        SHARED
+)
+target_sources(
+    openrm_tensorrt
+        PRIVATE
+        ${CMAKE_SOURCE_DIR}/src/tensorrt/nms.cpp
+        ${CMAKE_SOURCE_DIR}/src/tensorrt/nmsV5C36.cpp
+        ${CMAKE_SOURCE_DIR}/src/tensorrt/tensorrt.cpp
+)
+target_include_directories(
+    openrm_tensorrt
+        PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include/openrm>
+)
+target_link_libraries(
+    openrm_tensorrt
+        PRIVATE
+        nvinfer
+        nvinfer_plugin
+        nvonnxparser
+        nvparsers
+        cudart
+        cublas
+)

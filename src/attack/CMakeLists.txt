@@ -1,0 +1,19 @@
+add_library(
+    openrm_attack
+        SHARED
+)
+target_sources(
+    openrm_attack
+        PRIVATE
+        ${CMAKE_SOURCE_DIR}/src/attack/attack.cpp
+        ${CMAKE_SOURCE_DIR}/src/attack/deadlocker.cpp
+        ${CMAKE_SOURCE_DIR}/src/attack/freshcenter.cpp
+        ${CMAKE_SOURCE_DIR}/src/attack/filtrate.cpp
+        ${CMAKE_SOURCE_DIR}/src/attack/display.cpp
+)
+target_include_directories(
+    openrm_attack
+        PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include/openrm>
+)

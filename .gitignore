@@ -1,0 +1,5 @@
+build/
+**/build/
+demo/img/
+.vscode/
+.DS_Store

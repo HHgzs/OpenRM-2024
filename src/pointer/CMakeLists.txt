@@ -1,0 +1,22 @@
+add_library(
+    openrm_pointer
+        SHARED
+)
+target_sources(
+    openrm_pointer
+        PRIVATE
+        ${CMAKE_SOURCE_DIR}/src/pointer/display.cpp
+        ${CMAKE_SOURCE_DIR}/src/pointer/getter.cpp
+        ${CMAKE_SOURCE_DIR}/src/pointer/setter.cpp
+        ${CMAKE_SOURCE_DIR}/src/pointer/finder.cpp
+        ${CMAKE_SOURCE_DIR}/src/pointer/judge.cpp
+        ${CMAKE_SOURCE_DIR}/src/pointer/reprojection.cpp
+        ${CMAKE_SOURCE_DIR}/src/pointer/histogram.cpp
+        ${CMAKE_SOURCE_DIR}/src/pointer/color.cpp
+)
+target_include_directories(
+    openrm_pointer
+        PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include/openrm>
+)
