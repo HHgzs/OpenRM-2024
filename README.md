@@ -373,7 +373,7 @@ sudo ./run.sh -t
 - **-d** 彻底删除 OpenRM
 - **-i** 重新安装
 - **-g \<arg>** 调用git，需添加commit
-- 不添加参数，只编译安装 **OpenRM **动态链接库
+- 不添加参数，只编译安装 **OpenRM** 动态链接库
 
 
 
