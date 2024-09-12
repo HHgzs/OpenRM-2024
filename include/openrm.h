@@ -34,7 +34,6 @@
 #include <utils/tf.h>
 #include <utils/serial.h>
 #include <utils/print.h>
-#include <utils/trajectory.h>
 
 #include <video/video.h>
 
