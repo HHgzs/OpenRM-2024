@@ -7,7 +7,7 @@
 
 **适配开源自瞄框架 [TJURM-2024](https://github.com/HHgzs/TJURM-2024)**
 
-
+**欢迎查看Wiki，获取更多信息 [TJURM自瞄算法Wiki](https://github.com/HHgzs/TJURM-2024/wiki/TJURM%E8%87%AA%E7%9E%84%E7%AE%97%E6%B3%95Wiki)**
 
 
 
