@@ -236,7 +236,7 @@ sudo chmod 770 /usr/include/curses.h
 最后将权限改回来
 
 ```bash
-sudo chmod 440 /usr/include/curses.h
+sudo chmod 644 /usr/include/curses.h
 ```
 
 ---
