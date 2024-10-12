@@ -10,9 +10,8 @@ src_count=$(find src -type f \( -name "*.cpp" -o -name "*.cu" -o -name "*.txt" \
 cuda_count=$(find cuda/src cuda/include -type f \( -name "*.cuh" -o -name "*.cu" -o -name "*.h" -o -name "*.txt" \) -exec cat {} \; | wc -l)
 terminal_count=$(find terminal/src terminal/include -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.txt" \) -exec cat {} \; | wc -l)
 daheng_count=$(find include/video/daheng -type f \( -name "*.h" \) -exec cat {} \; | wc -l)
-tools_count=$(find tools -type f \( -name "*.py" -o -name "*.sh" \) -exec cat {} \; | wc -l)
 
-total=$((include_count + src_count + cuda_count + terminal_count + tools_count - daheng_count))
+total=$((include_count + src_count + cuda_count + terminal_count - daheng_count))
 
 max_threads=$(cat /proc/cpuinfo | grep "processor" | wc -l)
 
