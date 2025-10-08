@@ -6,8 +6,8 @@
 namespace rm {
 
 struct FiltrateState {
-    TimePoint last_t;                       // 目标上一次的时间
-    bool exist;                             // 目标是否存在
+    TimePoint last_t;                       // Last time of target
+    bool exist;                             // Whether target exists
     FiltrateState() : last_t(getTime()), exist(false) {}
 };
 

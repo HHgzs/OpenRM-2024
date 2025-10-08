@@ -7,14 +7,14 @@
 namespace rm {
 
 enum ValidByteMask {
-    VALID_BYTE_MASK_SENTRY    = 0x01,    // 0000 0001  0x01  哨兵
-    VALID_BYTE_MASK_HERO      = 0x02,    // 0000 0010  0x02  英雄
-    VALID_BYTE_MASK_ENGINEER  = 0x04,    // 0000 0100  0x04  工程
-    VALID_BYTE_MASK_INFANTRY3 = 0x08,    // 0000 1000  0x08  步兵3
-    VALID_BYTE_MASK_INFANTRY4 = 0x10,    // 0001 0000  0x10  步兵4
-    VALID_BYTE_MASK_INFANTRY5 = 0x20,    // 0010 0000  0x20  步兵5
-    VALID_BYTE_MASK_TOWER     = 0x40,    // 0100 0000  0x40  前哨站 基地
-    VALID_BYTE_MASK_ALL       = 0x80     // 1000 0000  0x80  全打
+    VALID_BYTE_MASK_SENTRY    = 0x01,    // 0000 0001  0x01  Sentry
+    VALID_BYTE_MASK_HERO      = 0x02,    // 0000 0010  0x02  Hero
+    VALID_BYTE_MASK_ENGINEER  = 0x04,    // 0000 0100  0x04  Engineer
+    VALID_BYTE_MASK_INFANTRY3 = 0x08,    // 0000 1000  0x08  Infantry 3
+    VALID_BYTE_MASK_INFANTRY4 = 0x10,    // 0001 0000  0x10  Infantry 4
+    VALID_BYTE_MASK_INFANTRY5 = 0x20,    // 0010 0000  0x20  Infantry 5
+    VALID_BYTE_MASK_TOWER     = 0x40,    // 0100 0000  0x40  Outpost Base
+    VALID_BYTE_MASK_ALL       = 0x80     // 1000 0000  0x80  All targets
 };
 
 bool isValidArmorID(ArmorID armor_id, char valid_byte);

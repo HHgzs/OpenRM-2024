@@ -78,12 +78,12 @@ bool rm::initTrtOnnx(
         );
         file.close();
 
-        // 释放资源
-        parser->destroy();
-        network->destroy();
-        infer_builder->destroy();
-        config->destroy();
-        engine->destroy();
+        // 释放资源 (TensorRT 10.x uses delete instead of destroy())
+        delete parser;
+        delete network;
+        delete infer_builder;
+        delete config;
+        delete engine;
 
         rm::message("TensorRT ONNX model parsed and engine built", rm::MSG_OK);
         return true; 
@@ -93,7 +93,8 @@ bool rm::initTrtOnnx(
         rm::message("TensoRT ONNX : " + error_message, rm::MSG_ERROR);
 
         if (*context) {
-            (*context)->destroy();
+            delete *context;
+            *context = nullptr;
         }
 
         return false;
@@ -132,8 +133,8 @@ bool rm::initTrtEngine(
             throw std::runtime_error("Failed to create TensorRT runtime.");
         }
 
-        // 反序列化引擎
-        auto engine = runtime->deserializeCudaEngine(serialized_engine, size, nullptr);
+        // 反序列化引擎 (TensorRT 10.x removed the third parameter)
+        auto engine = runtime->deserializeCudaEngine(serialized_engine, size);
         if (!engine) {
             throw std::runtime_error("Failed to deserialize TensorRT engine.");
         }
@@ -153,7 +154,8 @@ bool rm::initTrtEngine(
         std::string error_message = e.what();
         rm::message("TensoRT Engine : " + error_message, rm::MSG_ERROR);
         if (*context) {
-            (*context)->destroy();
+            delete *context;
+            *context = nullptr;
         }
         return false;
     }
@@ -182,10 +184,11 @@ void rm::detectEnqueue(
     nvinfer1::IExecutionContext** context,
     cudaStream_t* stream
 ) {
-    float* device_buffer[2];
-    device_buffer[0] = input_device_buffer;
-    device_buffer[1] = output_device_buffer;
-    (*context)->enqueueV2((void**)device_buffer, *stream, nullptr);
+    // TensorRT 10.x uses setTensorAddress + enqueueV3 instead of enqueueV2
+    // Assuming standard input/output names - adjust if your model uses different names
+    (*context)->setTensorAddress("images", input_device_buffer);  // Typical YOLO input name
+    (*context)->setTensorAddress("output0", output_device_buffer); // Typical YOLO output name
+    (*context)->enqueueV3(*stream);
 }
 
 void rm::detectOutput(

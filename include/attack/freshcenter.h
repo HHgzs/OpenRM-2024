@@ -6,9 +6,9 @@
 namespace rm {
 
 struct FreshCenterState {
-    TimePoint last_t;                       // 目标上一次的时间
-    double angle;                           // 目标与图传中心的角度
-    bool exist;                             // 目标是否存在
+    TimePoint last_t;                       // Last time of target
+    double angle;                           // Angle between target and image transmission center
+    bool exist;                             // Whether target exists
     FreshCenterState() : last_t(getTime()), angle(1e3), exist(false) {}
 };
 

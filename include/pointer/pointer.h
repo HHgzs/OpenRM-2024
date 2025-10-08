@@ -6,25 +6,25 @@
 
 namespace rm {
 
-void getGrayScaleRGB(const cv::Mat& input, cv::Mat& gray, ArmorColor color);            // 通过RGB通道拆分获取灰度图
-void getGrayScaleHSV(const cv::Mat& input, cv::Mat& gray, ArmorColor color);            // 通过HSV限制色相获取灰度图
-void getGrayScaleCVT(const cv::Mat& input, cv::Mat& gray);                              // 将图像直接转换为灰度图
-void getGrayScaleMix(const cv::Mat& input, cv::Mat& gray, ArmorColor color);            // 通过RGB和HSV混合方法获取灰度图
-void getGrayScaleSub(const cv::Mat& input, cv::Mat& gray, ArmorColor color);            // 通过RGB通道差值方法获取灰度图
+void getGrayScaleRGB(const cv::Mat& input, cv::Mat& gray, ArmorColor color);            // Get grayscale image by RGB channel separation
+void getGrayScaleHSV(const cv::Mat& input, cv::Mat& gray, ArmorColor color);            // Get grayscale image by HSV hue limitation
+void getGrayScaleCVT(const cv::Mat& input, cv::Mat& gray);                              // Convert image directly to grayscale
+void getGrayScaleMix(const cv::Mat& input, cv::Mat& gray, ArmorColor color);            // Get grayscale image by RGB and HSV mixed method
+void getGrayScaleSub(const cv::Mat& input, cv::Mat& gray, ArmorColor color);            // Get grayscale image by RGB channel difference method
 void getGrayScale(const cv::Mat& input, cv::Mat& gray, ArmorColor color = ARMOR_COLOR_BLUE, 
-                  GrayScaleMethod method = GRAY_SCALE_METHOD_CVT);                      // 获取灰度图统一接口
+                  GrayScaleMethod method = GRAY_SCALE_METHOD_CVT);                      // Unified interface to get grayscale image
 
-void getBinaryAverageThreshold(const cv::Mat& input, cv::Mat& binary, int threshold);   // 通过平均阈值获取二值图
-void getBinaryMaxMinRatio(const cv::Mat& input, cv::Mat& binary, double ratio);         // 通过最大最小值比率获取二值图
+void getBinaryAverageThreshold(const cv::Mat& input, cv::Mat& binary, int threshold);   // Get binary image by average threshold
+void getBinaryMaxMinRatio(const cv::Mat& input, cv::Mat& binary, double ratio);         // Get binary image by max-min ratio
 void getBinary(const cv::Mat& input, cv::Mat& binary, double threshold, 
-               BinaryMethod method = BINARY_METHOD_MAX_MIN_RATIO);                      // 获取二值图统一接口
+               BinaryMethod method = BINARY_METHOD_MAX_MIN_RATIO);                      // Unified interface to get binary image
 
-ArmorID getArmorIDfromClass36(ArmorClass armor_class);                                    // 通过装甲板类别获取装甲板id
-ArmorColor getArmorColorFromClass36(ArmorClass armor_class);                              // 通过装甲板类别获取装甲板颜色
-ArmorColor getArmorColorFromHSV(const cv::Mat& src, const rm::LightbarPair &rect);      // 通过HSV获取装甲板颜色
-ArmorColor getArmorColorFromHSV(const cv::Mat& src, const rm::YoloRect& rect);          // 通过HSV获取装甲板颜色
-ArmorColor getArmorColorFromRGB(const cv::Mat& src, const rm::LightbarPair &rect);      // 通过RBG获取装甲板颜色
-ArmorColor getArmorColorFromRGB(const cv::Mat& src, const rm::YoloRect& rect);          // 通过RBG获取装甲板颜色
+ArmorID getArmorIDfromClass36(ArmorClass armor_class);                                    // Get armor ID from armor class
+ArmorColor getArmorColorFromClass36(ArmorClass armor_class);                              // Get armor color from armor class
+ArmorColor getArmorColorFromHSV(const cv::Mat& src, const rm::LightbarPair &rect);      // Get armor color by HSV
+ArmorColor getArmorColorFromHSV(const cv::Mat& src, const rm::YoloRect& rect);          // Get armor color by HSV
+ArmorColor getArmorColorFromRGB(const cv::Mat& src, const rm::LightbarPair &rect);      // Get armor color by RGB
+ArmorColor getArmorColorFromRGB(const cv::Mat& src, const rm::YoloRect& rect);          // Get armor color by RGB
 
 double getLightHighHLS(const cv::Mat& src);
 

@@ -1,5 +1,51 @@
+# Build directories
 build/
 **/build/
 demo/img/
+
+# IDE and editor files
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
 .DS_Store
+*.dylib
+
+# LibreOffice lock files
+.~lock.*
+
+# Personal notes (optional - uncomment if you want to keep Command tips.docx)
+# Command tips.docx
+
+# CMake auto-generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+Makefile
+*.cmake
+!CMakeLists.txt
+!cmake/*.cmake.in
+!cmake/OpenRMConfig.cmake.in*
+
+# Compiled binaries and libraries
+*.so
+*.a
+*.o
+*.out
+*.exe
+
+# Auto-generated version headers
+VersionConfig.h
+!cmake/VersionConfig.h.in
+
+# Shared memory files
+/dev/shm/*
+
+# Backup files
+*.bak
+*.backup
+*~

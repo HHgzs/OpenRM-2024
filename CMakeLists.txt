@@ -27,6 +27,11 @@ find_package(CUDA)
 if (CUDA_FOUND)
     message(STATUS "CUDA Version: ${CUDA_VERSION}")
     include_directories(/usr/local/cuda/include)
+    # Define macro so headers know TensorRT is available
+    add_definitions(-DOPENRM_WITH_TENSORRT)
+else()
+    message(STATUS "CUDA not found - TensorRT support disabled")
+    message(STATUS "This is OK for: macOS, AMD GPUs, or systems without NVIDIA hardware")
 endif()
 
 # 设置主版本号、次版本号和补丁版本号
@@ -48,12 +53,12 @@ configure_file(
 
 
 # 添加子目录
-add_subdirectory(src/attack)
-add_subdirectory(src/kalman)
-add_subdirectory(src/pointer)
-add_subdirectory(src/solver)
 add_subdirectory(src/uniterm)
 add_subdirectory(src/utils)
+add_subdirectory(src/solver)
+add_subdirectory(src/pointer)
+add_subdirectory(src/attack)
+add_subdirectory(src/kalman)
 add_subdirectory(src/video)
 
 if (CUDA_FOUND)

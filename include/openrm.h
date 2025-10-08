@@ -25,7 +25,11 @@
 #include <structure/camera.hpp>
 #include <structure/shm.hpp>
 
+// TensorRT is only available when CUDA/NVIDIA GPU is present
+// On AMD GPUs or macOS, this will be undefined
+#ifdef OPENRM_WITH_TENSORRT
 #include <tensorrt/tensorrt.h>
+#endif
 
 #include <uniterm/uniterm.h>
 

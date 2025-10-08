@@ -86,12 +86,12 @@ public:
     bool   getFireCenter(const Eigen::Matrix<double, 4, 1>& pose);
 
 private:
-    double getSafeSub(const double, const double);                  // 安全减法
-    double getAngleTrans(const double, const double);               // 将模型内角度转换为接近新角度
-    double getAngleMin(const double, const double, const double);   // 获取角度最小值
-    int    getToggle(const double, const double);                   // 获取切换标签
-    double getWeightByTheta(const double);                          // 根据角度获取权重
-    bool   isAngleTrans(const double, const double);                // 根据角度确定是否发生切换
+    double getSafeSub(const double, const double);                  // Safe subtraction
+    double getAngleTrans(const double, const double);               // Convert angle in model to approach new angle
+    double getAngleMin(const double, const double, const double);   // Get minimum angle
+    int    getToggle(const double, const double);                   // Get toggle label
+    double getWeightByTheta(const double);                          // Get weight based on angle
+    bool   isAngleTrans(const double, const double);                // Determine if toggle occurs based on angle
 
 
     int    fire_update_ = 100;
@@ -103,7 +103,7 @@ private:
     int toggle_ = 0;
     int update_num_ = 0;
 
-    bool     enable_weighted_ = false;                              // 是否使用加权平均z值
+    bool     enable_weighted_ = false;                              // Whether to use weighted average z value
 
     EKF<5, 4>       model_;
     KF<2, 1>        omega_model_;

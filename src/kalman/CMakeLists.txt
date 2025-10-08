@@ -23,4 +23,13 @@ target_include_directories(
         PRIVATE
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include/openrm>
+        ${CERES_INCLUDE_DIRS}
+)
+target_link_libraries(
+    openrm_kalman
+        PRIVATE
+        ${CERES_LIBRARIES}
+        openrm_print
+        openrm_timer
+        openrm_uniterm
 )

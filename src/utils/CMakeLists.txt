@@ -50,6 +50,12 @@ target_include_directories(
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include/openrm>
 )
+target_link_libraries(
+    openrm_serial
+        PRIVATE
+        openrm_timer
+        openrm_uniterm
+)
 
 
 
@@ -70,6 +76,11 @@ target_include_directories(
         PRIVATE
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include/openrm>
+)
+target_link_libraries(
+    openrm_tf
+        PRIVATE
+        ${OpenCV_LIBS}
 )
 
 

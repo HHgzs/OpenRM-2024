@@ -84,8 +84,8 @@ struct AntitopV3_OmegaFuncH {
 
 
 
-// AntitopV1类
-// 使用基于扩展卡尔曼的中心预测模型
+// AntitopV3 class
+// Uses Extended Kalman Filter based center prediction model
 class AntitopV3 {
 
 public:
@@ -118,45 +118,45 @@ public:
     bool   getFireCenter(const Eigen::Matrix<double, 4, 1>& pose);
 
 private:
-    double getSafeSub(const double, const double);                  // 角度安全减法
-    double getAngleTrans(const double, const double);               // 将模型内角度转换为接近新角度
-    double getAngleTrans(const double, const double, double);       // 将模型内角度转换为接近新角度，转换考虑预测
-    double getAngleMin(const double, const double, const double);   // 获取角度最小值
-    int    getToggle(const double, const double);                   // 获取切换标签
-    double getWeightByTheta(const double);                          // 根据角度获取权重
+    double getSafeSub(const double, const double);                  // Safe subtraction for angles
+    double getAngleTrans(const double, const double);               // Convert angle in model to approach new angle
+    double getAngleTrans(const double, const double, double);       // Convert angle in model to approach new angle, considering prediction
+    double getAngleMin(const double, const double, const double);   // Get minimum angle
+    int    getToggle(const double, const double);                   // Get toggle label
+    double getWeightByTheta(const double);                          // Get weight based on angle
     bool   isAngleTrans(const double, const double);                
 
-    double   r_[2] = {0.25, 0.25};                                  // 两个位姿的半径
-    double   z_[2] = {0, 0};                                        // 两个位姿的高度
+    double   r_[2] = {0.25, 0.25};                                  // Radius of two poses
+    double   z_[2] = {0, 0};                                        // Height of two poses
 
-    double   r_min_ = 0.15;                                         // 最小半径
-    double   r_max_ = 0.4;                                          // 最大半径
+    double   r_min_ = 0.15;                                         // Minimum radius
+    double   r_max_ = 0.4;                                          // Maximum radius
 
-    int      fire_update_ = 100;                                    // 开火更新次数
-    double   fire_delay_ = 0.5;                                     // 认为模型可用的最大延迟
-    double   fire_armor_angle_ = 0.5;                               // 跟随模式开火角度
-    double   fire_center_angle_ = 0.2;                              // 中心模式装甲板开火角度
+    int      fire_update_ = 100;                                    // Fire update count
+    double   fire_delay_ = 0.5;                                     // Maximum delay considered for model availability
+    double   fire_armor_angle_ = 0.5;                               // Fire angle in follow mode
+    double   fire_center_angle_ = 0.2;                              // Fire angle for armor plate in center mode
     
-    int      toggle_ = 0;                                           // 切换标签
-    int      armor_num_ = 4;                                        // 装甲板数量
-    int      update_num_ = 0;                                       // 更新次数
+    int      toggle_ = 0;                                           // Toggle label
+    int      armor_num_ = 4;                                        // Number of armor plates
+    int      update_num_ = 0;                                       // Update count
 
-    bool     enable_weighted_ = false;                              // 是否使用加权平均z值
+    bool     enable_weighted_ = false;                              // Whether to use weighted average z value
     
-    EKF<9, 4>              model_;                                  // 运动模型
-    KF<4, 2>               center_model_;                           // 中心模型
-    KF<3, 1>               omega_model_;                            // 角速度模型
+    EKF<9, 4>              model_;                                  // Motion model
+    KF<4, 2>               center_model_;                           // Center model
+    KF<3, 1>               omega_model_;                            // Angular velocity model
 
-    SlideWeightedAvg<double>* weighted_z_;                          // z值加权平均
+    SlideWeightedAvg<double>* weighted_z_;                          // Weighted average z value
     
-    AntitopV3_FuncA        funcA_;                                  // 运动模型的状态转移函数
-    AntitopV3_FuncH        funcH_;                                  // 运动模型的观测函数
-    AntitopV3_CenterFuncA  center_funcA_;                           // 中心模型的状态转移函数
-    AntitopV3_CenterFuncH  center_funcH_;                           // 中心模型的观测函数
-    AntitopV3_OmegaFuncA   omega_funcA_;                            // 角速度模型的状态转移函数
-    AntitopV3_OmegaFuncH   omega_funcH_;                            // 角速度模型的观测函数
+    AntitopV3_FuncA        funcA_;                                  // State transition function of motion model
+    AntitopV3_FuncH        funcH_;                                  // Observation function of motion model
+    AntitopV3_CenterFuncA  center_funcA_;                           // State transition function of center model
+    AntitopV3_CenterFuncH  center_funcH_;                           // Observation function of center model
+    AntitopV3_OmegaFuncA   omega_funcA_;                            // State transition function of angular velocity model
+    AntitopV3_OmegaFuncH   omega_funcH_;                            // Observation function of angular velocity model
 
-    TimePoint t_;                                                   // 上一次更新的时间
+    TimePoint t_;                                                   // Last update time
 };
 
 }

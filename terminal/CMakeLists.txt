@@ -9,9 +9,11 @@ add_compile_options(-g -O0 -w -fno-omit-frame-pointer -Wno-notes)
 find_package(OpenRM REQUIRED)
 include_directories(${OpenRM_INCLUDE_DIRS})
 
-# CUDA
-find_package(CUDA REQUIRED)
-include_directories(/usr/local/cuda/include)
+# CUDA (optional - not available on macOS)
+find_package(CUDA)
+if (CUDA_FOUND)
+    include_directories(/usr/local/cuda/include)
+endif()
 
 # OpenCV
 find_package(OpenCV 4.5.4 REQUIRED)
@@ -34,6 +36,7 @@ target_link_libraries(
     openrm
         ${OpenRM_LIBS}
         ${OpenCV_LIBS}
+        ${CERES_LIBRARIES}
         ncurses
 )
 

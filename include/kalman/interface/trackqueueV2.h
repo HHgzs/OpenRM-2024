@@ -40,16 +40,16 @@ struct TrackQueueV2_FuncH {
 
 class TQstateV2 {
 public:
-    TimePoint last_t;                       // 目标上一次的时间
-    Eigen::Matrix<double, 4, 1> last_pose;  // 目标上一次的位置
-    EKF<11, 4> *model;                      // 目标运动模型
-    SlideStd<double> *v_std;                // 目标运动模型的速度标准差
-    SlideStd<double> *a_std;                // 目标运动模型的加速度标准差
-    SlideStd<double> *w_std;                // 目标运动模型的角速度标准差
-    int count;                              // 此目标更新计数
-    int keep;                               // 此目标保持计数
-    bool exist;                             // 目标是否存在
-    bool available;                         // 目标信息可用
+    TimePoint last_t;                       // Last time of target
+    Eigen::Matrix<double, 4, 1> last_pose;  // Last position of target
+    EKF<11, 4> *model;                      // Target motion model
+    SlideStd<double> *v_std;                // Velocity standard deviation of target motion model
+    SlideStd<double> *a_std;                // Acceleration standard deviation of target motion model
+    SlideStd<double> *w_std;                // Angular velocity standard deviation of target motion model
+    int count;                              // Update count of this target
+    int keep;                               // Keep count of this target
+    bool exist;                             // Whether target exists
+    bool available;                         // Target information available
 
     TQstateV2() :
         last_t(getTime()),
@@ -90,15 +90,15 @@ public:
     TrackQueueV2(int count, double distance, double delay, double angle_diff, double toggle_angle);
     ~TrackQueueV2() {}
 
-    void push(Eigen::Matrix<double, 4, 1>& pose, TimePoint t);                       // 推入单次目标信息
-    void update();                                                                   // 每帧更新一次
+    void push(Eigen::Matrix<double, 4, 1>& pose, TimePoint t);                       // Push single target information
+    void update();                                                                   // Update once per frame
 
 public:
-    void setCount(int c) { this->count_ = c; }                                       // 设置认为模型可用的最小更新次数
-    void setDistance(double d) { this->distance_ = d; }                              // 设置认为是同一个目标的最大移动距离
-    void setDelay(double d) { this->delay_ = d; }                                    // 设置模型不重置的最大延迟
-    void setAngleDiffer(double d) { this->angle_diff_ = d; }                         // 设置认为是同一目标的最大夹角
-    void setToggleAngle(double d) { this->toggle_angle_ = d; }                       // 设置切换目标的与中心连线夹角之差
+    void setCount(int c) { this->count_ = c; }                                       // Set minimum update count for model availability
+    void setDistance(double d) { this->distance_ = d; }                              // Set maximum movement distance to be considered same target
+    void setDelay(double d) { this->delay_ = d; }                                    // Set maximum delay without model reset
+    void setAngleDiffer(double d) { this->angle_diff_ = d; }                         // Set maximum angle for same target
+    void setToggleAngle(double d) { this->toggle_angle_ = d; }                       // Set angle difference between toggle target and center line
     void setFireValue(double sv, double sw, double sa, double angle) {
         this->fire_std_v_ = sv;
         this->fire_std_w_ = sw;
@@ -109,51 +109,51 @@ public:
     void setMatrixQ(double, double, double, double, double, double, double, double, double, double, double);
     void setMatrixR(double, double, double, double);
 
-    int         getToggle() { return last_toggle_; }                                 // 获取切换标签
-    EKF<11, 4>* getModel();                                                          // 获取更新后的模型                                 
-    TimePoint   getLastTime();                                                       // 获取上次更新的时间
-    void        getStateStr(std::vector<std::string>& str);                          // 获取目标状态信息字符串                                                            
+    int         getToggle() { return last_toggle_; }                                 // Get toggle label
+    EKF<11, 4>* getModel();                                                          // Get updated model                                 
+    TimePoint   getLastTime();                                                       // Get last update time
+    void        getStateStr(std::vector<std::string>& str);                          // Get target state information string                                                            
 
-    Eigen::Matrix<double, 4, 1> getPose();                                           // 直接获取上次传入的位姿
-    Eigen::Matrix<double, 4, 1> getPose(double delay);                               // 获取根据模型预测的位姿
+    Eigen::Matrix<double, 4, 1> getPose();                                           // Directly get last passed pose
+    Eigen::Matrix<double, 4, 1> getPose(double delay);                               // Get pose predicted by model
 
-    bool isStdStable();                                                              // 判断参数拟合标准差是否稳定
-    bool isFireValid(const Eigen::Matrix<double, 4, 1>& pose);                       // 判断是否满足开火条件
+    bool isStdStable();                                                              // Determine if parameter fitting standard deviation is stable
+    bool isFireValid(const Eigen::Matrix<double, 4, 1>& pose);                       // Determine if fire condition is met
 
 
 
 private:
     double getDistance(
         const Eigen::Matrix<double, 4, 1>& this_pose,
-        const Eigen::Matrix<double, 4, 1>& last_pose);                               // 两目标之间的距离
-    double getAngleDiff(double angle0, double angle1);                               // 任意两角度数差的绝对值
-    double getAngleOffset(const Eigen::Matrix<double, 4, 1>& pose);                  // 目标方向与车身连线的夹角
-    int    getMinAngleOffset();                                                      // 获取具有最小夹角的目标索引
+        const Eigen::Matrix<double, 4, 1>& last_pose);                               // Distance between two targets
+    double getAngleDiff(double angle0, double angle1);                               // Absolute value of difference between any two angles
+    double getAngleOffset(const Eigen::Matrix<double, 4, 1>& pose);                  // Angle between target direction and vehicle connection line
+    int    getMinAngleOffset();                                                      // Get target index with minimum angle
     
     
 private:
-    int    count_        = 10;              // 可维持状态稳定的最小更新次数
-    double distance_     = 0.1;             // 可认为是同一个目标的最大移动距离
-    double delay_        = 0.3;             // 可认为是同一个目标的最大更新延迟
-    double angle_diff_   = 0.5;             // 可认为是同一块板子的最大夹角之差
-    double toggle_angle_ = 0.17;            // 切换目标的夹角之差满足条件才可触发切换
+    int    count_        = 10;              // Minimum update count to maintain stable state
+    double distance_     = 0.1;             // Maximum movement distance to be considered same target
+    double delay_        = 0.3;             // Maximum update delay to be considered same target
+    double angle_diff_   = 0.5;             // Maximum angle difference to be considered same plate
+    double toggle_angle_ = 0.17;            // Angle difference condition to trigger toggle
 
-    int    last_index_   = -1;              // 上一次更新的输出目标索引
-    int    last_toggle_  = 0;               // 上一次更新的切换标签
+    int    last_index_   = -1;              // Output target index of last update
+    int    last_toggle_  = 0;               // Toggle label of last update
 
-    double fire_std_v_   = 0.1;             // 开火速度标准差
-    double fire_std_w_   = 0.1;             // 开火角速度标准差
-    double fire_std_a_   = 0.1;             // 开火加速度标准差
-    double fire_angle_   = 0.5;             // 开火角度
+    double fire_std_v_   = 0.1;             // Fire velocity standard deviation
+    double fire_std_w_   = 0.1;             // Fire angular velocity standard deviation
+    double fire_std_a_   = 0.1;             // Fire acceleration standard deviation
+    double fire_angle_   = 0.5;             // Fire angle
 
-    TrackQueueV2_FuncA funcA_;              // 运动模型的状态转移函数
-    TrackQueueV2_FuncH funcH_;              // 运动模型的观测函数
+    TrackQueueV2_FuncA funcA_;              // State transition function of motion model
+    TrackQueueV2_FuncH funcH_;              // Observation function of motion model
 
-    Eigen::Matrix<double, 11, 11> matrixQ_; // 运动模型的过程噪声协方差矩阵
-    Eigen::Matrix<double, 4, 4> matrixR_;   // 运动模型的观测噪声协方差矩阵
+    Eigen::Matrix<double, 11, 11> matrixQ_; // Process noise covariance matrix of motion model
+    Eigen::Matrix<double, 4, 4> matrixR_;   // Observation noise covariance matrix of motion model
 
 public:
-    std::vector<TQstateV2> list_;          // 目标状态列表
+    std::vector<TQstateV2> list_;          // Target state list
 };
 
 }

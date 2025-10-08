@@ -10,14 +10,14 @@
 // w in [1.884, 2.000]
 // b = 2.090 - a
 
-// x, y, z:    预测序列中代表符的中心点坐标，观测序列中代表符的靶心坐标
-// theta:      符的朝向
-// angle:      当前激活符叶的角度
-// spd:        符的旋转角速度
-// a:          符的速度三角函数振幅
-// w:          符的转动参数omega
-// p:          符的角速度相位
-// r:          符的半径
+// x, y, z:    Center point coordinates of rune in prediction sequence, target center coordinates in observation sequence
+// theta:      Orientation of rune
+// angle:      Angle of currently activated rune leaf
+// spd:        Rotational angular velocity of rune
+// a:          Trigonometric amplitude of rune speed
+// w:          Rotation parameter omega of rune
+// p:          Angular velocity phase of rune
+// r:          Radius of rune
 
 // [ x, y, z, theta, angle, spd ]       [ x, y, z, theta, angle]    
 // [ 0, 1, 2,   3,     4,    5  ]       [ 0, 1, 2,   3,     4  ]
@@ -128,32 +128,32 @@ public:
 
 
 private:
-    double getAngleTrans(const double, const double);               // 将模型内角度转换为接近新角度
-    double getSafeSub(const double, const double);                  // 安全减法
+    double getAngleTrans(const double, const double);               // Convert angle in model to approach new angle
+    double getSafeSub(const double, const double);                  // Safe subtraction
 
-    int      toggle_ = 0;                                           // 切换标签
-    int      update_num_ = 0;                                       // 更新次数
-    bool     is_big_rune_ = false;                                  // 是否是大符
+    int      toggle_ = 0;                                           // Toggle label
+    int      update_num_ = 0;                                       // Update count
+    bool     is_big_rune_ = false;                                  // Whether it is big rune
     
     
-    EKF<6, 5>          small_model_;                                // 运动模型
-    EKF<8, 5>          big_model_;                                  // 运动模型
-    KF<2, 1>           spd_model_;                                  // 角速度模型
+    EKF<6, 5>          small_model_;                                // Motion model
+    EKF<8, 5>          big_model_;                                  // Motion model
+    KF<2, 1>           spd_model_;                                  // Angular velocity model
 
-    SmallRuneV1_FuncA  small_funcA_;                                // 运动模型的状态转移函数
-    BigRuneV1_FuncA    big_funcA_;                                  // 运动模型的状态转移函数
-    RuneV1_SpdFuncA    spd_funcA_;                                  // 角速度模型的状态转移函数
+    SmallRuneV1_FuncA  small_funcA_;                                // State transition function of motion model
+    BigRuneV1_FuncA    big_funcA_;                                  // State transition function of motion model
+    RuneV1_SpdFuncA    spd_funcA_;                                  // State transition function of angular velocity model
 
-    SmallRuneV1_FuncH  small_funcH_;                                // 运动模型的观测函数
-    BigRuneV1_FuncH    big_funcH_;                                  // 运动模型的观测函数
-    RuneV1_SpdFuncH    spd_funcH_;                                  // 角速度模型的观测函数
+    SmallRuneV1_FuncH  small_funcH_;                                // Observation function of motion model
+    BigRuneV1_FuncH    big_funcH_;                                  // Observation function of motion model
+    RuneV1_SpdFuncH    spd_funcH_;                                  // Observation function of angular velocity model
 
-    TimePoint t_;                                                   // 上一次更新的时间
-    SlideAvg<double> center_x_;                                     // 符的中心点x坐标
-    SlideAvg<double> center_y_;                                     // 符的中心点y坐标
-    SlideAvg<double> center_z_;                                     // 符的中心点z坐标
-    SlideAvg<double> theta_;                                        // 符的朝向
-    SlideAvg<double> spd_;                                          // 符的速度
+    TimePoint t_;                                                   // Last update time
+    SlideAvg<double> center_x_;                                     // Rune center point x coordinate
+    SlideAvg<double> center_y_;                                     // Rune center point y coordinate
+    SlideAvg<double> center_z_;                                     // Rune center point z coordinate
+    SlideAvg<double> theta_;                                        // Rune orientation
+    SlideAvg<double> spd_;                                          // Rune speed
 };
 
 

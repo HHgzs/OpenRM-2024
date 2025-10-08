@@ -13,3 +13,12 @@ target_include_directories(
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include/openrm>
 )
+target_link_libraries(
+    openrm_solver
+        PRIVATE
+        ${OpenCV_LIBS}
+        ${CERES_LIBRARIES}
+        openrm_timer
+        openrm_uniterm
+        openrm_tf
+)

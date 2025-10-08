@@ -38,8 +38,8 @@ struct AntitopV2_FuncH {
 };
 
 
-// AntitopV1类
-// 使用基于扩展卡尔曼的中心预测模型
+// AntitopV2 class
+// Uses Extended Kalman Filter based center prediction model
 class AntitopV2 {
 
 public:
@@ -63,31 +63,31 @@ public:
     bool   getFireCenter(const Eigen::Matrix<double, 4, 1>& pose);
 
 private:
-    double getAngleTrans(const double, const double);               // 将模型内角度转换为接近新角度
-    double getAngleTrans(const double, const double, double);       // 将模型预测角度转换为接近新角度,同步转换模型内角度
-    double getAngleMin(const double, const double, const double);   // 获取角度最小值
-    int    getToggle(const double, const double);                   // 获取切换标签
+    double getAngleTrans(const double, const double);               // Convert angle in model to approach new angle
+    double getAngleTrans(const double, const double, double);       // Convert predicted angle in model to approach new angle, synchronously convert angle in model
+    double getAngleMin(const double, const double, const double);   // Get minimum angle
+    int    getToggle(const double, const double);                   // Get toggle label
 
-    double   r_[2] = {0.25, 0.25};                                  // 两个位姿的半径
-    double   z_[2] = {0, 0};                                        // 两个位姿的高度
+    double   r_[2] = {0.25, 0.25};                                  // Radius of two poses
+    double   z_[2] = {0, 0};                                        // Height of two poses
 
-    double   r_min_ = 0.15;                                         // 最小半径
-    double   r_max_ = 0.4;                                          // 最大半径
+    double   r_min_ = 0.15;                                         // Minimum radius
+    double   r_max_ = 0.4;                                          // Maximum radius
 
-    uint64_t fire_update_ = 100;                                    // 开火更新次数
-    double   fire_delay_ = 0.5;                                     // 认为模型可用的最大延迟
-    double   fire_angle_ = 0.5;                                     // 跟随模式开火角度
-    double   fire_center_angle_ = 0.2;                              // 中心模式装甲板开火角度
+    uint64_t fire_update_ = 100;                                    // Fire update count
+    double   fire_delay_ = 0.5;                                     // Maximum delay considered for model availability
+    double   fire_angle_ = 0.5;                                     // Fire angle in follow mode
+    double   fire_center_angle_ = 0.2;                              // Fire angle for armor plate in center mode
     
-    int      toggle_ = 0;                                           // 切换标签
-    int      armor_num_ = 4;                                        // 装甲板数量
-    uint64_t update_num_ = 0;                                       // 更新次数
+    int      toggle_ = 0;                                           // Toggle label
+    int      armor_num_ = 4;                                        // Number of armor plates
+    uint64_t update_num_ = 0;                                       // Update count
     
-    EKF<9, 4>        model_;                                        // 运动模型
-    AntitopV2_FuncA  funcA_;                                        // 运动模型的状态转移函数
-    AntitopV2_FuncH  funcH_;                                        // 运动模型的观测函数
+    EKF<9, 4>        model_;                                        // Motion model
+    AntitopV2_FuncA  funcA_;                                        // State transition function of motion model
+    AntitopV2_FuncH  funcH_;                                        // Observation function of motion model
 
-    TimePoint t_;                                                   // 上一次更新的时间
+    TimePoint t_;                                                   // Last update time
 };
 
 }

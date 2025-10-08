@@ -55,7 +55,7 @@ private:
     double keep_delay_ = 3.0;
 
     EKF<9, 3> model_;
-    TrajectoryV1_FuncA  funcA_;                                        // 运动模型的状态转移函数
+    TrajectoryV1_FuncA  funcA_;                                        // State transition function of motion model
     TrajectoryV1_FuncH  funcH_; 
 
     TimePoint t_;
